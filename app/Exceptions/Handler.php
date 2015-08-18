@@ -1,6 +1,6 @@
 <?php
 
-namespace YoutubeAutomator\Exceptions;
+namespace YouTubeAutomator\Exceptions;
 
 use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;

@@ -1,6 +1,6 @@
 <?php
 
-namespace YoutubeAutomator\Http\Controllers;
+namespace YouTubeAutomator\Http\Controllers;
 
 use App;
 use Auth;
@@ -9,7 +9,7 @@ use Google_Service_Oauth2;
 use Redirect;
 
 use Illuminate\Http\Request;
-use YoutubeAutomator\Models\User;
+use YouTubeAutomator\Models\User;
 
 class LoginController extends Controller
 {

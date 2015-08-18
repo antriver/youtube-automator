@@ -1,5 +1,5 @@
 suites:
     main:
-        namespace: YoutubeAutomator
-        psr4_prefix: YoutubeAutomator
+        namespace: YouTubeAutomator
+        psr4_prefix: YouTubeAutomator
         src_path: app

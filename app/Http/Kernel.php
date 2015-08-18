@@ -1,6 +1,6 @@
 <?php
 
-namespace YoutubeAutomator\Http;
+namespace YouTubeAutomator\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -13,11 +13,11 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \YoutubeAutomator\Http\Middleware\EncryptCookies::class,
+        \YouTubeAutomator\Http\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \YoutubeAutomator\Http\Middleware\VerifyCsrfToken::class,
+        \YouTubeAutomator\Http\Middleware\VerifyCsrfToken::class,
     ];
 
     /**
@@ -26,8 +26,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \YoutubeAutomator\Http\Middleware\Authenticate::class,
+        'auth' => \YouTubeAutomator\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \YoutubeAutomator\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest' => \YouTubeAutomator\Http\Middleware\RedirectIfAuthenticated::class,
     ];
 }

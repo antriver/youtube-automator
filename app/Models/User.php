@@ -1,6 +1,6 @@
 <?php
 
-namespace YoutubeAutomator\Models;
+namespace YouTubeAutomator\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;

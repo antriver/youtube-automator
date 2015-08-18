@@ -1,6 +1,6 @@
 <?php
 
-namespace YoutubeAutomator\Jobs;
+namespace YouTubeAutomator\Jobs;
 
 use Illuminate\Bus\Queueable;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace YoutubeAutomator\Http\Controllers\Auth;
+namespace YouTubeAutomator\Http\Controllers\Auth;
 
-use YoutubeAutomator\Http\Controllers\Controller;
+use YouTubeAutomator\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class PasswordController extends Controller

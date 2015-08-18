@@ -143,9 +143,9 @@ return [
         /*
          * Application Service Providers...
          */
-        YoutubeAutomator\Providers\AppServiceProvider::class,
-        YoutubeAutomator\Providers\EventServiceProvider::class,
-        YoutubeAutomator\Providers\RouteServiceProvider::class,
+        YouTubeAutomator\Providers\AppServiceProvider::class,
+        YouTubeAutomator\Providers\EventServiceProvider::class,
+        YouTubeAutomator\Providers\RouteServiceProvider::class,
 
     ],
 

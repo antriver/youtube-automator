@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'model' => YoutubeAutomator\Models\User::class,
+    'model' => YouTubeAutomator\Models\User::class,
 
     /*
     |--------------------------------------------------------------------------

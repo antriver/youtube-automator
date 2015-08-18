@@ -12,5 +12,6 @@
 */
 
 Route::get('/', 'RootController@getIndex');
+Route::get('videos', 'RootController@getVideos');
 
 Route::controller('login', 'LoginController');

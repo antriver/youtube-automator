@@ -1,6 +1,6 @@
 <?php
 
-namespace YoutubeAutomator\Providers;
+namespace YouTubeAutomator\Providers;
 
 use Config;
 use Google_Client;

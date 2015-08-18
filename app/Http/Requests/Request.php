@@ -1,6 +1,6 @@
 <?php
 
-namespace YoutubeAutomator\Http\Requests;
+namespace YouTubeAutomator\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

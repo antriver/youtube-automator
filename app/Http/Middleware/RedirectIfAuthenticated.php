@@ -1,6 +1,6 @@
 <?php
 
-namespace YoutubeAutomator\Http\Middleware;
+namespace YouTubeAutomator\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;

@@ -1,6 +1,6 @@
 <?php
 
-namespace YoutubeAutomator\Console\Commands;
+namespace YouTubeAutomator\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;

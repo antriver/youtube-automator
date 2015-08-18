@@ -1,6 +1,6 @@
 <?php
 
-namespace YoutubeAutomator\Events;
+namespace YouTubeAutomator\Events;
 
 abstract class Event
 {

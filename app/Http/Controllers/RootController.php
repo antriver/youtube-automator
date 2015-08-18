@@ -1,11 +1,13 @@
 <?php
 
-namespace YoutubeAutomator\Http\Controllers;
+namespace YouTubeAutomator\Http\Controllers;
 
 use Auth;
 use Google_Client;
+use Google_Service_YouTube;
 use Redirect;
 use Illuminate\Http\Request;
+use YouTubeAutomator\Models\YouTube\Video;
 
 class RootController extends Controller
 {
@@ -14,11 +16,29 @@ class RootController extends Controller
         $this->middleware('auth');
     }
 
-    public function getIndex(Request $request, Google_Client $googleClient)
+    public function getIndex()
     {
-        $user = Auth::user();
-        return view('index', [
-            'user' => $user
+        return redirect()->secure('/videos');
+    }
+
+    public function getVideos(Google_Client $googleClient)
+    {
+        $videos = [];
+
+        $youtube = new Google_Service_YouTube($googleClient);
+        $searchResponse = $youtube->search->listSearch('id', [
+            'q' => '*',
+            'type' => 'video',
+            'forMine' => 1,
+            'maxResults' => 30
+        ]);
+
+        foreach ($searchResponse->items as $item) {
+            $videos[] = new Video($item->id->videoId);
+        }
+
+        return view('videos', [
+            'videos' => $videos
         ]);
     }
 }

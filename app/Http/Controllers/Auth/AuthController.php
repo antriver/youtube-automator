@@ -1,10 +1,10 @@
 <?php
 
-namespace YoutubeAutomator\Http\Controllers\Auth;
+namespace YouTubeAutomator\Http\Controllers\Auth;
 
-use YoutubeAutomator\User;
+use YouTubeAutomator\User;
 use Validator;
-use YoutubeAutomator\Http\Controllers\Controller;
+use YouTubeAutomator\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 

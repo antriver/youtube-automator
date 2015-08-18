@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(YoutubeAutomator\User::class, function ($faker) {
+$factory->define(YouTubeAutomator\User::class, function ($faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,

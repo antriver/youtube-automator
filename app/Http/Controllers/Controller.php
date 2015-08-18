@@ -1,6 +1,6 @@
 <?php
 
-namespace YoutubeAutomator\Http\Controllers;
+namespace YouTubeAutomator\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;

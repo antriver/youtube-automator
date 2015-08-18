@@ -28,17 +28,17 @@ $app = new Illuminate\Foundation\Application(
 
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
-    YoutubeAutomator\Http\Kernel::class
+    YouTubeAutomator\Http\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
-    YoutubeAutomator\Console\Kernel::class
+    YouTubeAutomator\Console\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    YoutubeAutomator\Exceptions\Handler::class
+    YouTubeAutomator\Exceptions\Handler::class
 );
 
 /*
