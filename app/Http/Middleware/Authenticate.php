@@ -41,7 +41,7 @@ class Authenticate
             $googleClient = App::make('Google_Client');
             $googleClient->setAccessToken($this->auth->user()->access_token);
         } else {
-            return redirect('/login');
+            return redirect()->secure('/login');
         }
 
         return $next($request);

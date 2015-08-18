@@ -43,7 +43,7 @@ class LoginController extends Controller
             $user->save();
             Auth::login($user);
 
-            return Redirect('/');
+            return redirect()->secure('/');
         }
 
 
@@ -52,6 +52,6 @@ class LoginController extends Controller
         $request->session()->flash('state', $state);
 
         $authUrl = $googleClient->createAuthUrl();
-        return Redirect($authUrl);
+        return redirect($authUrl);
     }
 }
