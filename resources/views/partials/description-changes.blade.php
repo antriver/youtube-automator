@@ -14,8 +14,8 @@
         <span class="label label-sm label-default"><i class="fa fa-clock-o"></i> Scheduled for {{ $change->execute_mins_after_publish }} mins after publishing</span>
         @endif
 
-        <a href="#" class="btn-delete-description-change btn btn-black btn-xs"><i class="fa fa-trash-o"></i> Delete</a>
-        <a href="#" class="btn-edit-description-change btn btn-black btn-xs"><i class="fa fa-pencil"></i> Edit</a>
+        <a href="#" class="btn-delete-description-change btn btn-black btn-xs"><i class="fa fa-trash-o"></i></a>
+        <a href="#" class="btn-edit-description-change btn btn-black btn-xs"><i class="fa fa-pencil"></i></a>
 
         {{ Lang::wordTruncate($change->description, 200) }}
 
