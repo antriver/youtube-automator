@@ -30,7 +30,7 @@ class RootController extends Controller
             'q' => '*',
             'type' => 'video',
             'forMine' => 1,
-            'maxResults' => 30
+            'maxResults' => 3
         ]);
 
         foreach ($searchResponse->items as $item) {

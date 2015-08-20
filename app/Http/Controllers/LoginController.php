@@ -7,7 +7,6 @@ use Auth;
 use Google_Client;
 use Google_Service_Oauth2;
 use Redirect;
-
 use Illuminate\Http\Request;
 use YouTubeAutomator\Models\User;
 

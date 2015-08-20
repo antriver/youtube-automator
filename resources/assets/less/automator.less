@@ -1,15 +1,39 @@
 @import (less) "../../../bower_components/bootstrap/less/bootstrap.less";
 @import (less) "../../../bower_components/startbootstrap-sb-admin/css/sb-admin.css";
 
-.table.video-table img {
-    width:120px;
-    height:90px;
+.btn-black {
+  .button-variant(#fff; #222; #222);
 }
 
-.table.video-table td {
-    vertical-align: middle;
+.table.video-table  {
 
-    &:first-child {
+    td:first-child {
         width:120px;
+    }
+
+    img {
+        width:120px;
+        height:90px;
+    }
+
+    h3 {
+        font-size:17px;
+        margin:10px 0;
+    }
+
+    hr {
+        margin:10px;
+    }
+
+}
+
+ul.description-changes {
+    list-style: none;
+    margin:0;
+    padding:0;
+
+    li {
+        margin:0 0 5px 0;
+        padding:0;
     }
 }
