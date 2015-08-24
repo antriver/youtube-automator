@@ -6,21 +6,11 @@ use App;
 use DateTime;
 use Google_Service_YouTube;
 use Illuminate\Database\Eloquent\Model;
-use YouTubeAutomator\Models\YouTube\Video;
+use YouTubeAutomator\Models\User;
 
 class DescriptionChange extends Model
 {
     public $guarded = [];
-
-    /**
-     * Return the video model for this change.
-     *
-     * @return Video
-     */
-    private function getVideo()
-    {
-        return new Video($this->video_id);
-    }
 
     /**
      * Change the video's description via the YouTube API.
@@ -29,21 +19,24 @@ class DescriptionChange extends Model
      */
     public function execute()
     {
-        $video = $this->getVideo();
-
-        $videoData = $video->getData();
-        $videoData->snippet->description = $this->description;
-
         $googleClient = App::make('Google_Client');
+        $user = User::find($this->user_id);
+        $googleClient->setAccessToken($user->access_token);
         $youtube = new Google_Service_YouTube($googleClient);
 
-        // Update the video resource by calling the videos.update() method.
-        $youtube->videos->update("snippet", $video);
 
-        $video->fresh();
+        $listResponse = $youtube->videos->listVideos("snippet", array('id' => $this->video_id));
+        if (count($listResponse) < 1 ) {
+            return false;
+        }
 
-        $this->success = ($video->getDescription() == $this->description);
+        $video = $listResponse[0];
+        $videoSnippet = $video['snippet'];
+        $videoSnippet['description'] = $this->description;
 
+        $updateResponse = $youtube->videos->update("snippet", $video);
+
+        $this->success = ($updateResponse->snippet->description === $this->description);
         $this->executed_at = (new DateTime)->format('Y-m-d H:i:s');
         $this->save();
 

@@ -9,9 +9,9 @@
         <td><img src="{{ $video->getThumbnail() }}" alt="" />
         <td><h3>{!!
             $video->isPublished()
-            ? '<span class="label label-success">Published at ' . $video->getPublishedDate() . '</span>'
-            : '<span class="label label-danger">Private</span>'
-        !!} {{ $video->getTitle() }}</h3>
+            ? '<span class="label label-success pull-right">Published at ' . date('Y-m-d H:i:s', strtotime($video->getPublishedDate())) . '</span>'
+            : '<span class="label label-danger  pull-right">Unpublished</span>'
+        !!} <a href="https://www.youtube.com/watch?v={{ $video->videoId }}" target="_blank">{{ $video->getTitle() }}</a></h3>
 
             <p>{{ Lang::wordTruncate($video->getDescription(), 200) }}</p>
 
@@ -22,7 +22,11 @@
             ?>
             @include('partials.description-changes')
 
-            <a class="btn btn-black btn-sm btn-add-description-change"><i class="fa fa-clock-o"></i> Schedule new description</a>
+            @if (count($descriptionChanges) > 0)
+            <hr/>
+            @endif
+
+            <a class="btn btn-black btn-xs btn-add-description-change"><i class="fa fa-plus"></i> Schedule new description</a>
 
         </td>
         </td>
