@@ -7,10 +7,21 @@ use DateTime;
 use Google_Service_YouTube;
 use Illuminate\Database\Eloquent\Model;
 use YouTubeAutomator\Models\User;
+use YouTubeAutomator\Models\YouTube\Video;
 
 class DescriptionChange extends Model
 {
     public $guarded = [];
+
+    /**
+     * Return the video model for this change.
+     *
+     * @return Video
+     */
+    public function getVideo()
+    {
+        return new Video($this->video_id);
+    }
 
     /**
      * Change the video's description via the YouTube API.
