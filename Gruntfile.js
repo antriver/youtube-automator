@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
 
     //var timestamp = Math.floor(new Date().getTime() / 1000);
-    var timestamp = 0;
+    var timestamp = 1;
 
     grunt.initConfig({
 
