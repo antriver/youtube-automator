@@ -40,16 +40,16 @@ class ExecuteChanges extends Command
     {
         $this->log = $this->getLogger();
 
-        $this->log->info("Executing changes");
+        $this->log->info("Executing changes...");
 
         $this->checkForPublishedVideos();
 
         $changes = $this->getScheduledChanges();
 
         foreach ($changes as $change) {
-            $this->log->info("Executing {$change->id}");
+            $this->log->info("Executing change {$change->id}");
             $success = $change->execute();
-            $this->log->info("{$change->id} Success: {$success}");
+            $this->log->info("Change {$change->id} result: {$success}");
         }
     }
 
@@ -89,7 +89,7 @@ class ExecuteChanges extends Command
 
             $user = User::find($pendingVideoChange->user_id);
             if (!$user) {
-                $this->log->error("User not found.");
+                $this->log->error("User {$pendingVideoChange->user_id} not found.");
                 continue;
             }
 
@@ -100,7 +100,7 @@ class ExecuteChanges extends Command
 
             if ($video->isPublished()) {
 
-                $this->log->info("Video {$pendingVideoChange->video_id} published at {$video->getPublishedDate()}");
+                $this->log->info("Video {$pendingVideoChange->video_id} published at " . date('r', strtotime($video->getPublishedDate())));
 
                 $thisVideoChanges = DescriptionChange::where('video_id', $pendingVideoChange->video_id)
                     ->whereNotNull('execute_mins_after_publish')
@@ -112,14 +112,14 @@ class ExecuteChanges extends Command
                     $publishedAt = strtotime($video->getPublishedDate());
                     $executeAt = $publishedAt + $thisVideoChange->execute_mins_after_publish * 60;
 
-                    $this->log->info("Setting execute time for {$pendingVideoChange->id} to {$executeAt}");
+                    $this->log->info("Setting execute time for change {$thisVideoChange->id} to " . date('r', $executeAt));
 
                     $thisVideoChange->execute_at = date('Y-m-d H:i:s', $executeAt);
                     $thisVideoChange->execute_mins_after_publish = null;
                     $thisVideoChange->save();
                 }
             } else {
-                $this->log->notice("Video not published.");
+                $this->log->notice("Video {$pendingVideoChange->video_id} not published.");
             }
 
         }
