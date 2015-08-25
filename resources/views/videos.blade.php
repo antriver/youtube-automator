@@ -36,11 +36,31 @@
 </table>
 
 <form id="add-description-change-form" action="#" class="edit-description-change-form form form-horizontal" style="display:none;">
+
     {{ csrf_field() }}
-    <p>execute_at: <input type="text" name="execute_at" /></p>
-    <p>execute_mins_after_publish: <input type="text" name="execute_mins_after_publish" /></p>
-    <p>description: <textarea name="description"></textarea></p>
-    <button class="btn btn-black btn-sm"><i class="fa fa-plus-circle"></i> Submit</button>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">At</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="execute_at" placeholder="yyyy-mm-dd hh:mm:ss" />
+            <h5>or</h5>
+            <input class="form-control" type="text" name="execute_mins_after_publish" /> minutes after publishing.
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Description</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" name="description"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-black btn-xs"><i class="fa fa-plus-circle"></i> Submit</button>
+        </div>
+    </div>
+
 </form>
 
 @stop
