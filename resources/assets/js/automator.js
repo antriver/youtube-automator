@@ -7,7 +7,12 @@ $(document).on('click', '.btn-edit-description-change', function(e) {
     var $form = $('#add-description-change-form').clone();
     $form.attr('id', '');
     $form.find('textarea[name=description]').val($li.find('.full-description').text());
-    $form.find('input[name=execute_at]').val($li.attr('data-execute-at'));
+
+    var execute_at = new Date($li.attr('data-execute-at'));
+
+    $form.find('input[name=execute_at_date]').val(execute_at.toYMD());
+    $form.find('input[name=execute_at_time]').val(execute_at.toHM());
+
     $form.find('input[name=execute_mins_after_publish]').val($li.attr('data-execute-mins-after-publish'));
     $form.show();
     $li.html($form);
@@ -17,9 +22,11 @@ $(document).on('submit', '.edit-description-change-form', function(e) {
     e.preventDefault();
     var videoId = $(this).closest('tr').attr('data-id');
 
+    var execute_at = new Date($('input[name=execute_at_date]').val() + ' ' + $('input[name=execute_at_time]').val());
+
     var data = {
         description: $(this).find('textarea[name=description]').val(),
-        execute_at: $(this).find('input[name=execute_at]').val(),
+        execute_at: execute_at.toUTCString(),
         execute_mins_after_publish: $(this).find('input[name=execute_mins_after_publish]').val()
     };
 
@@ -81,6 +88,7 @@ function showDescriptionChanges(videoId)
 {
     $.get('/videos/' + videoId + '/description-changes/', function(res) {
         $('.video[data-id=' + videoId + '] .description-changes').replaceWith(res);
+        formatTimes();
     });
 }
 
@@ -88,3 +96,23 @@ function showDescriptionAddForm(videoId)
 {
     $('.video[data-id=' + videoId + '] .description-changes').append($('#add-description-change-form').show());
 }
+
+function formatTimes()
+{
+    $('.time:not(.rendered)').each(function(){
+        var timestamp = parseInt($(this).attr('data-timestamp'));
+        var d = new Date(timestamp * 1000);
+        $(this).text(d.toDateTime());
+    });
+}
+
+$(document).ready(formatTimes);
+
+function getCurrentTimezone()
+{
+    return new Date().toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1];
+}
+
+$(document).ready(function(){
+    $('.current-timezone').text(getCurrentTimezone());
+});

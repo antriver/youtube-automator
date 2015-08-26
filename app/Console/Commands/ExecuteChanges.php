@@ -100,7 +100,7 @@ class ExecuteChanges extends Command
 
             if ($video->isPublished()) {
 
-                $this->log->info("Video {$pendingVideoChange->video_id} published at " . date('r', strtotime($video->getPublishedDate())));
+                $this->log->info("Video {$pendingVideoChange->video_id} published at " . date('r', $video->getPublishedTimestamp()));
 
                 $thisVideoChanges = DescriptionChange::where('video_id', $pendingVideoChange->video_id)
                     ->whereNotNull('execute_mins_after_publish')
@@ -109,7 +109,7 @@ class ExecuteChanges extends Command
 
                 foreach ($thisVideoChanges as $thisVideoChange) {
 
-                    $publishedAt = strtotime($video->getPublishedDate());
+                    $publishedAt = $video->getPublishedTimestamp();
                     $executeAt = $publishedAt + $thisVideoChange->execute_mins_after_publish * 60;
 
                     $this->log->info("Setting execute time for change {$thisVideoChange->id} to " . date('r', $executeAt));

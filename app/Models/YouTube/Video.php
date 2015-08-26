@@ -28,6 +28,7 @@ class Video
         return DescriptionChange::where('video_id', $this->videoId)
             ->orderBy('executed_at')
             ->orderBy('execute_at')
+            ->orderBy('execute_mins_after_publish')
             ->get();
     }
 
@@ -86,10 +87,9 @@ class Video
      *
      * @return string
      */
-    public function getPublishedDate()
+    public function getPublishedTimestamp()
     {
-// TODO: Is this right?
-        return $this->data->snippet->publishedAt;
+        return strtotime($this->data->snippet->publishedAt);
     }
 
     /**

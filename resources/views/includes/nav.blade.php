@@ -15,6 +15,9 @@
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
 
+        <li>
+            <a href="#">All times are <span class="current-timezone"></span></a>
+        </li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ Auth::user()->name }} <b class="caret"></b></a>
             <ul class="dropdown-menu">

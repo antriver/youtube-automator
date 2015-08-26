@@ -24,7 +24,7 @@ class DescriptionChangesController extends Controller
     {
         return $this->validate($request, [
             'description' => 'required',
-            'execute_at' => 'date_format:"Y-m-d H:i:s"',
+            'execute_at' => 'string',
             'execute_mins_after_publish' => 'integer'
         ]);
     }
@@ -60,6 +60,9 @@ class DescriptionChangesController extends Controller
     {
         $descriptionChanges = DescriptionChange::where('video_id', $videoId)
             ->where('user_id', Auth::user()->id)
+            ->orderBy('executed_at')
+            ->orderBy('execute_at')
+            ->orderBy('execute_mins_after_publish')
             ->get();
 
         return view('partials.description-changes', [
@@ -83,7 +86,7 @@ class DescriptionChangesController extends Controller
             'user_id' => Auth::user()->id,
             'video_id' => $videoId,
             'description' => $request->input('description'),
-            'execute_at' => $request->input('execute_at') ? $request->input('execute_at') : null,
+            'execute_at' => $request->input('execute_at') ? date('Y-m-d H:i:s', strtotime($request->input('execute_at'))) : null,
             'execute_mins_after_publish' =>
                 $request->input('execute_mins_after_publish') ? $request->input('execute_mins_after_publish') : null
         ]);
@@ -107,7 +110,7 @@ class DescriptionChangesController extends Controller
         $change = $this->loadDescriptionChange($videoId, $descriptionChangeId);
 
         $change->description = $request->input('description');
-        $change->execute_at = $request->input('execute_at') ? $request->input('execute_at') : null;
+        $change->execute_at = $request->input('execute_at') ? date('Y-m-d H:i:s', strtotime($request->input('execute_at'))) : null;
         $change->execute_mins_after_publish =
             $request->input('execute_mins_after_publish') ? $request->input('execute_mins_after_publish') : null;
 

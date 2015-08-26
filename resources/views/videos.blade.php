@@ -7,11 +7,14 @@
     @foreach ($videos as $video)
     <tr class="video" data-id="{{ $video->videoId }}">
         <td><img src="{{ $video->getThumbnail() }}" alt="" />
-        <td><h3>{!!
-            $video->isPublished()
-            ? '<span class="label label-success pull-right">Published at ' . date('Y-m-d H:i:s', strtotime($video->getPublishedDate())) . '</span>'
-            : '<span class="label label-danger  pull-right">Unpublished</span>'
-        !!} <a href="https://www.youtube.com/watch?v={{ $video->videoId }}" target="_blank">{{ $video->getTitle() }}</a></h3>
+        <td><h3>
+            @if ($video->isPublished())
+            <span class="label label-success pull-right">Published at <span class="time" data-timestamp="{{ $video->getPublishedTimestamp() }}"></span></span>
+            @else
+            <span class="label label-danger pull-right">Unpublished</span>
+            @endif
+            <a href="https://www.youtube.com/watch?v={{ $video->videoId }}" target="_blank">{{ $video->getTitle() }}</a>
+            </h3>
 
             <p>{{ Lang::wordTruncate($video->getDescription(), 200) }}</p>
 
@@ -42,7 +45,9 @@
     <div class="form-group">
         <label class="col-sm-2 control-label">At</label>
         <div class="col-sm-10">
-            <input class="form-control" type="text" name="execute_at" placeholder="yyyy-mm-dd hh:mm:ss" />
+            <input class="form-control" type="date" name="execute_at_date" />
+            <input class="form-control" type="time" name="execute_at_time" />
+            <span class="current-timezone"></span>
             <h5>or</h5>
             <input class="form-control" type="text" name="execute_mins_after_publish" /> minutes after publishing.
         </div>
