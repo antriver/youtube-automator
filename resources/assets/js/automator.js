@@ -8,10 +8,13 @@ $(document).on('click', '.btn-edit-description-change', function(e) {
     $form.attr('id', '');
     $form.find('textarea[name=description]').val($li.find('.full-description').text());
 
-    var execute_at = new Date($li.attr('data-execute-at'));
+    var execute_at;
+    if ($li.attr('data-execute-at')) {
+        execute_at = new Date($li.attr('data-execute-at'));
+    }
 
-    $form.find('input[name=execute_at_date]').val(execute_at.toYMD());
-    $form.find('input[name=execute_at_time]').val(execute_at.toHM());
+    $form.find('input[name=execute_at_date]').val(execute_at ? execute_at.toYMD() : '');
+    $form.find('input[name=execute_at_time]').val(execute_at ? execute_at.toHM() : '');
 
     $form.find('input[name=execute_mins_after_publish]').val($li.attr('data-execute-mins-after-publish'));
     $form.show();
