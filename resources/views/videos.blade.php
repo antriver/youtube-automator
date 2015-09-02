@@ -49,7 +49,7 @@
             <input class="form-control" type="time" name="execute_at_time" />
             <span class="current-timezone"></span>
             <h5>or</h5>
-            <input class="form-control" type="text" name="execute_mins_after_publish" /> minutes after publishing.
+            <input class="form-control" type="text" name="execute_hours_after_publish" /> hour(s) after publishing.
         </div>
     </div>
 

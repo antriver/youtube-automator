@@ -1,1 +1,1 @@
-<?php return array('version' => 4);
+<?php return array('version' => 5);

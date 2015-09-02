@@ -17,7 +17,11 @@ $(document).on('click', '.btn-edit-description-change', function(e) {
     $form.find('input[name=execute_at_date]').val(execute_at ? execute_at.toYMD() : '');
     $form.find('input[name=execute_at_time]').val(execute_at ? execute_at.toHM() : '');
 
-    $form.find('input[name=execute_mins_after_publish]').val($li.attr('data-execute-mins-after-publish'));
+    var hours_after_plublish = $li.attr('data-execute-mins-after-publish') ?
+        $li.attr('data-execute-mins-after-publish') / 60 :
+        null;
+
+    $form.find('input[name=execute_hours_after_publish]').val(hours_after_plublish);
     $form.show();
     $li.html($form);
 });
@@ -31,10 +35,15 @@ $(document).on('submit', '.edit-description-change-form', function(e) {
         execute_at = new Date($('input[name=execute_at_date]').val() + ' ' + $('input[name=execute_at_time]').val());
     }
 
+    var execute_mins_after_publish = null;
+    if ($(this).find('input[name=execute_hours_after_publish]').val()) {
+        execute_mins_after_publish = parseInt($(this).find('input[name=execute_hours_after_publish]').val()) * 60;
+    }
+
     var data = {
         description: $(this).find('textarea[name=description]').val(),
         execute_at: execute_at ? execute_at.toUTCString() : null,
-        execute_mins_after_publish: $(this).find('input[name=execute_mins_after_publish]').val()
+        execute_mins_after_publish: execute_mins_after_publish
     };
 
     var endpoint = '/videos/' + videoId + '/description-changes';
