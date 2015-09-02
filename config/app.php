@@ -198,4 +198,6 @@ return [
 
     ],
 
+    'videos_per_page' => env('APP_VIDEOS_PER_PAGE', 30)
+
 ];

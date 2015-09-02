@@ -3,6 +3,7 @@
 namespace YouTubeAutomator\Http\Controllers;
 
 use Auth;
+use Config;
 use Google_Client;
 use Google_Service_YouTube;
 use Redirect;
@@ -30,7 +31,7 @@ class RootController extends Controller
             'q' => '*',
             'type' => 'video',
             'forMine' => 1,
-            'maxResults' => 30
+            'maxResults' => Config::get('app.videos_per_page')
         ]);
 
         foreach ($searchResponse->items as $item) {

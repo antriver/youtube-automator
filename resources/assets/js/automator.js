@@ -22,11 +22,14 @@ $(document).on('submit', '.edit-description-change-form', function(e) {
     e.preventDefault();
     var videoId = $(this).closest('tr').attr('data-id');
 
-    var execute_at = new Date($('input[name=execute_at_date]').val() + ' ' + $('input[name=execute_at_time]').val());
+    var execute_at = null;
+    if ($('input[name=execute_at_date]').val()) {
+        execute_at = new Date($('input[name=execute_at_date]').val() + ' ' + $('input[name=execute_at_time]').val());
+    }
 
     var data = {
         description: $(this).find('textarea[name=description]').val(),
-        execute_at: execute_at.toUTCString(),
+        execute_at: execute_at ? execute_at.toUTCString() : null,
         execute_mins_after_publish: $(this).find('input[name=execute_mins_after_publish]').val()
     };
 
