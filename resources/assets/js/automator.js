@@ -10,6 +10,7 @@ $(document).on('click', '.btn-edit-description-change', function(e) {
 
     var execute_at;
     if ($li.attr('data-execute-at')) {
+        console.log("$li.attr('data-execute-at')", $li.attr('data-execute-at'));
         execute_at = new Date($li.attr('data-execute-at'));
     }
 

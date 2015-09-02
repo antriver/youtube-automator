@@ -3,7 +3,7 @@
 
     <li
         data-id="{{ $change->id }}"
-        data-execute-at="{{ date('r', strtotime($change->execute_at)) }}"
+        data-execute-at="{{ $change->execute_at ? date('r', strtotime($change->execute_at)) : '' }}"
         data-execute-mins-after-publish="{{ $change->execute_mins_after_publish }}">
 
         <a href="#" class="btn-delete-description-change btn btn-black btn-xs"><i class="fa fa-trash-o"></i></a>
