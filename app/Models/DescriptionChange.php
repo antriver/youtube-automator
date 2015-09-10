@@ -37,7 +37,7 @@ class DescriptionChange extends Model
 
 
         $listResponse = $youtube->videos->listVideos("snippet", array('id' => $this->video_id));
-        if (count($listResponse) < 1 ) {
+        if (count($listResponse) < 1) {
             return false;
         }
 

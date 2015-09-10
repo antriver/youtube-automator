@@ -82,7 +82,6 @@ class ExecuteChanges extends Command
             ->get();
 
         foreach ($pendingVideoChanges as $pendingVideoChange) {
-
             $this->log->info("{$pendingVideoChange->id} {$pendingVideoChange->video_id}");
 
             // We need to login as the user that owns this video in order to query it
@@ -99,8 +98,8 @@ class ExecuteChanges extends Command
             $video = $pendingVideoChange->getVideo();
 
             if ($video->isPublished()) {
-
-                $this->log->info("Video {$pendingVideoChange->video_id} published at " . date('r', $video->getPublishedTimestamp()));
+                $this->log->info("Video {$pendingVideoChange->video_id} published at "
+                    . date('r', $video->getPublishedTimestamp()));
 
                 $thisVideoChanges = DescriptionChange::where('video_id', $pendingVideoChange->video_id)
                     ->whereNotNull('execute_mins_after_publish')
@@ -108,11 +107,11 @@ class ExecuteChanges extends Command
                     ->get();
 
                 foreach ($thisVideoChanges as $thisVideoChange) {
-
                     $publishedAt = $video->getPublishedTimestamp();
                     $executeAt = $publishedAt + $thisVideoChange->execute_mins_after_publish * 60;
 
-                    $this->log->info("Setting execute time for change {$thisVideoChange->id} to " . date('r', $executeAt));
+                    $this->log->info("Setting execute time for change {$thisVideoChange->id} to "
+                        . date('r', $executeAt));
 
                     $thisVideoChange->execute_at = date('Y-m-d H:i:s', $executeAt);
                     $thisVideoChange->execute_mins_after_publish = null;

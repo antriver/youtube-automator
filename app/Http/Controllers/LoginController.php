@@ -12,6 +12,14 @@ use YouTubeAutomator\Models\User;
 
 class LoginController extends Controller
 {
+    /**
+     * /login
+     * Authenticate the user via Google OAuth then redirect to homepage.
+     *
+     * @param  Request       $request
+     * @param  Google_Client $googleClient
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
     public function anyIndex(Request $request, Google_Client $googleClient)
     {
         if ($code = $request->input('code')) {
@@ -27,13 +35,11 @@ class LoginController extends Controller
 
             if ($user = User::where('google_user_id', $userInfo->id)->first()) {
                 // User is already in DB.
-
             } else {
                 // Create a new user.
                 $user = new User([
                     'google_user_id' => $userInfo->id,
                 ]);
-
             }
 
             $user->access_token = $googleClient->getAccessToken();
@@ -44,7 +50,6 @@ class LoginController extends Controller
 
             return redirect()->secure('/');
         }
-
 
         $state = (string)mt_rand();
         $googleClient->setState($state);

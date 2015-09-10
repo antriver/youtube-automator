@@ -11,13 +11,37 @@
 |
 */
 
-Route::get('/', 'RootController@getIndex');
+Route::get(
+    '/',
+    'RootController@getIndex'
+);
 
-Route::get('videos', 'RootController@getVideos');
+Route::get(
+    'videos',
+    'RootController@getVideos'
+);
 
-Route::get('videos/{videoId}/description-changes', 'DescriptionChangesController@getDescriptionChanges');
-Route::post('videos/{videoId}/description-changes', 'DescriptionChangesController@postDescriptionChanges');
-Route::put('videos/{videoId}/description-changes/{descriptionChangeId}', 'DescriptionChangesController@putDescriptionChanges');
-Route::delete('videos/{videoId}/description-changes/{descriptionChangeId}', 'DescriptionChangesController@deleteDescriptionChanges');
+Route::get(
+    'videos/{videoId}/description-changes',
+    'DescriptionChangesController@getDescriptionChanges'
+);
 
-Route::controller('login', 'LoginController');
+Route::post(
+    'videos/{videoId}/description-changes',
+    'DescriptionChangesController@postDescriptionChanges'
+);
+
+Route::put(
+    'videos/{videoId}/description-changes/{descriptionChangeId}',
+    'DescriptionChangesController@putDescriptionChanges'
+);
+
+Route::delete(
+    'videos/{videoId}/description-changes/{descriptionChangeId}',
+    'DescriptionChangesController@deleteDescriptionChanges'
+);
+
+Route::controller(
+    'login',
+    'LoginController'
+);

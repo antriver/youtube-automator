@@ -21,7 +21,10 @@ class AppServiceProvider extends ServiceProvider
             $client = new Google_Client();
             $client->setClientId(Config::get('services.google.client_id'));
             $client->setClientSecret(Config::get('services.google.client_secret'));
-            $client->setScopes(['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/youtube']);
+            $client->setScopes([
+                'https://www.googleapis.com/auth/userinfo.profile',
+                'https://www.googleapis.com/auth/youtube'
+            ]);
 
             $redirect = Config::get('app.url') . '/login';
             $client->setRedirectUri($redirect);

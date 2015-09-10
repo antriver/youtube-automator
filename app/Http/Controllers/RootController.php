@@ -17,11 +17,22 @@ class RootController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * GET /
+     * Display the homepage.
+     */
     public function getIndex()
     {
         return redirect()->secure('/videos');
     }
 
+    /**
+     * GET /videos
+     * Display the list of users videos.
+     *
+     * @param  Google_Client $googleClient
+     * @return \Illuminate\View\View
+     */
     public function getVideos(Google_Client $googleClient)
     {
         $videos = [];

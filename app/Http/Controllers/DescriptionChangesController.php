@@ -82,11 +82,16 @@ class DescriptionChangesController extends Controller
     {
         $this->validateInput($request);
 
+        $executeAt = null;
+        if ($request->input('execute_at')) {
+            $executeAt = date('Y-m-d H:i:s', strtotime($request->input('execute_at')));
+        }
+
         $change = new DescriptionChange([
             'user_id' => Auth::user()->id,
             'video_id' => $videoId,
             'description' => $request->input('description'),
-            'execute_at' => $request->input('execute_at') ? date('Y-m-d H:i:s', strtotime($request->input('execute_at'))) : null,
+            'execute_at' => $executeAt,
             'execute_mins_after_publish' =>
                 $request->input('execute_mins_after_publish') ? $request->input('execute_mins_after_publish') : null
         ]);
@@ -110,7 +115,12 @@ class DescriptionChangesController extends Controller
         $change = $this->loadDescriptionChange($videoId, $descriptionChangeId);
 
         $change->description = $request->input('description');
-        $change->execute_at = $request->input('execute_at') ? date('Y-m-d H:i:s', strtotime($request->input('execute_at'))) : null;
+
+        $change->execute_at = null;
+        if ($request->input('execute_at')) {
+            $change->execute_at = date('Y-m-d H:i:s', strtotime($request->input('execute_at')));
+        }
+
         $change->execute_mins_after_publish =
             $request->input('execute_mins_after_publish') ? $request->input('execute_mins_after_publish') : null;
 
