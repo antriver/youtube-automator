@@ -10,11 +10,11 @@
         <a href="#" class="btn-edit-description-change btn btn-black btn-xs"><i class="fa fa-pencil"></i></a>
 
         @if ($change->executed_at)
-        <span class="label label-sm label-info"><i class="fa fa-check-circle"></i> Changed at <span class="time" data-timestamp="{{ strtotime($change->executed_at) }}"></span></span>
+        <span class="label label-sm label-default changed"><i class="fa fa-check-circle"></i> Changed at <span class="time" data-timestamp="{{ strtotime($change->executed_at) }}"></span></span>
         @elseif ($change->execute_at)
-        <span class="label label-sm label-default"><i class="fa fa-clock-o"></i> Scheduled for <span class="time" data-timestamp="{{ strtotime($change->execute_at) }}"></span></span>
+        <span class="label label-sm label-info"><i class="fa fa-clock-o"></i> Scheduled for <span class="time" data-timestamp="{{ strtotime($change->execute_at) }}"></span></span>
         @elseif ($change->execute_mins_after_publish)
-        <span class="label label-sm label-default"><i class="fa fa-clock-o"></i> Scheduled for {{ $change->execute_mins_after_publish / 60 }} hours after publishing</span>
+        <span class="label label-sm label-info"><i class="fa fa-clock-o"></i> Scheduled for {{ $change->execute_mins_after_publish / 60 }} hours after publishing</span>
         @endif
 
         {{ Lang::wordTruncate($change->description, 200) }}
