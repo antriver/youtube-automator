@@ -54,7 +54,7 @@ class ExecuteChanges extends Command
             try {
                 $success = $change->execute();
 
-                $snippet = substr($change->description, 0, 20) . '...';
+                $snippet = substr($change->description, 0, 35) . '...';
 
                 $this->log->info("Change {$change->id}: Successfully changed description of video {$change->video_id} to \"{$snippet}\"");
 
