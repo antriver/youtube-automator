@@ -82,21 +82,32 @@ class ExecuteChanges extends Command
 
     public function refreshAccessTokens()
     {
+        $googleClient = App::make('Google_Client');
+
         // Get all users
         $users = User::all();
         foreach ($users as $user) {
             if ($user->refresh_token) {
                 $this->log->info(
-                    "Refreshing token for '{$user->name}'. Previous token expires at {$user->access_token_expires}"
+                    "Access Token for {$user->name} expires at {$user->access_token_expires}"
                 );
 
-                $user->refreshAccessToken();
+                $expires = strtotime($user->access_token_expires);
+                $cutoff = strtotime("+15 MINUTES");
 
-                $this->log->info(
-                    "Token for '{$user->name}' now expires at {$user->access_token_expires}"
-                );
+                if ($expires < $cutoff) {
+                    $this->log->info(
+                        "Refreshing token for '{$user->name}'."
+                    );
 
-                $user->save();
+                    $user->refreshAccessToken();
+
+                    $this->log->info(
+                        "Token for '{$user->name}' now expires at {$user->access_token_expires}"
+                    );
+
+                    $user->save();
+                }
 
             } else {
                 $this->log->error("User '{$user->name}' has no refresh token.");
