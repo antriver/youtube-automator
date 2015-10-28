@@ -7,6 +7,7 @@ use Auth;
 use Closure;
 use Google_Client;
 use Illuminate\Contracts\Auth\Guard;
+use YouTubeAutomator\Models\User;
 
 class Authenticate
 {
@@ -21,7 +22,6 @@ class Authenticate
      * Create a new filter instance.
      *
      * @param  Guard  $auth
-     * @return void
      */
     public function __construct(Guard $auth)
     {
@@ -37,13 +37,24 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->user()) {
+        /** @var User $user */
+        $user = $this->auth->user();
+
+        if ($user) {
             $googleClient = App::make('Google_Client');
-            $googleClient->setAccessToken($this->auth->user()->access_token);
-        } else {
-            return redirect()->secure('/login');
+
+            if ($user->access_token) {
+                $googleClient->setAccessToken($user->access_token);
+
+                if ($googleClient->isAccessTokenExpired()) {
+                    $user->refreshAccessToken();
+                }
+
+                return $next($request);
+            }
+
         }
 
-        return $next($request);
+        return redirect()->secure('/login');
     }
 }

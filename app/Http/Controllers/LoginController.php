@@ -42,9 +42,12 @@ class LoginController extends Controller
                 ]);
             }
 
-            $user->access_token = $googleClient->getAccessToken();
-            $user->name = $userInfo->name;
+            $user->setAccessToken(
+                $googleClient->getAccessToken(),
+                $googleClient->getRefreshToken()
+            );
 
+            $user->name = $userInfo->name;
             $user->save();
             Auth::login($user);
 
@@ -55,6 +58,7 @@ class LoginController extends Controller
         $googleClient->setState($state);
         $request->session()->flash('state', $state);
 
+        $googleClient->setApprovalPrompt('force');
         $authUrl = $googleClient->createAuthUrl();
         return redirect($authUrl);
     }

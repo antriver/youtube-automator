@@ -9,6 +9,31 @@ use Illuminate\Database\Eloquent\Model;
 use YouTubeAutomator\Models\User;
 use YouTubeAutomator\Models\YouTube\Video;
 
+/**
+ * YouTubeAutomator\Models\DescriptionChange
+ *
+ * @mixin \Eloquent
+ * @property integer $id
+ * @property integer $user_id
+ * @property string $video_id
+ * @property string $description
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $execute_at
+ * @property integer $execute_mins_after_publish
+ * @property string $executed_at
+ * @property boolean $success
+ * @method static \Illuminate\Database\Query\Builder|\YouTubeAutomator\Models\DescriptionChange whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\YouTubeAutomator\Models\DescriptionChange whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\YouTubeAutomator\Models\DescriptionChange whereVideoId($value)
+ * @method static \Illuminate\Database\Query\Builder|\YouTubeAutomator\Models\DescriptionChange whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\YouTubeAutomator\Models\DescriptionChange whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\YouTubeAutomator\Models\DescriptionChange whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\YouTubeAutomator\Models\DescriptionChange whereExecuteAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\YouTubeAutomator\Models\DescriptionChange whereExecuteMinsAfterPublish($value)
+ * @method static \Illuminate\Database\Query\Builder|\YouTubeAutomator\Models\DescriptionChange whereExecutedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\YouTubeAutomator\Models\DescriptionChange whereSuccess($value)
+ */
 class DescriptionChange extends Model
 {
     public $guarded = [];

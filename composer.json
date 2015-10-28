@@ -9,7 +9,8 @@
         "laravel/framework": "5.1.*",
         "google/apiclient": "^1.1",
         "kirkbushell/eloquence": "^1.4",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "barryvdh/laravel-ide-helper": "^2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

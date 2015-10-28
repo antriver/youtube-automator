@@ -147,6 +147,8 @@ return [
         YouTubeAutomator\Providers\EventServiceProvider::class,
         YouTubeAutomator\Providers\RouteServiceProvider::class,
 
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
     ],
 
     /*
