@@ -9,7 +9,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html"><i class="fa fa-youtube"></i> YouTube Automator</a>
+        <a class="navbar-brand" href="/"><i class="fa fa-youtube"></i> YouTube Automator</a>
     </div>
 
     <!-- Top Menu Items -->
