@@ -40,16 +40,23 @@ class ExecuteChanges extends Command
     {
         $this->log = $this->getLogger();
 
-        $this->log->info("Executing changes...");
+        $this->log->info("Checking for changes to execute...");
 
         $this->checkForPublishedVideos();
 
         $changes = $this->getScheduledChanges();
 
         foreach ($changes as $change) {
-            $this->log->info("Executing change {$change->id}");
-            $success = $change->execute();
-            $this->log->info("Change {$change->id} result: {$success}");
+
+            $user = $change->getUser();
+
+            $this->log->info("Executing change {$change->id} for video {$change->video_id} (user {$user->name})");
+            try {
+                $success = $change->execute();
+                $this->log->info("Change {$change->id} result: {$success}");
+            } catch (Exception $e) {
+                $this->log->error("Exception changing video description: " . $e->getMessage());
+            }
         }
     }
 
@@ -76,32 +83,39 @@ class ExecuteChanges extends Command
      */
     public function checkForPublishedVideos()
     {
-        $pendingVideoChanges = DescriptionChange::whereNotNull('execute_mins_after_publish')
+        // First get all videos (one result per video) where its excute time has not yet been set
+        $pendingVideos = DescriptionChange::whereNotNull('execute_mins_after_publish')
             ->whereNull('executed_at')
             ->groupBy('video_id')
             ->get();
 
-        foreach ($pendingVideoChanges as $pendingVideoChange) {
-            $this->log->info("{$pendingVideoChange->id} {$pendingVideoChange->video_id}");
+        foreach ($pendingVideos as $pendingVideo) {
 
-            // We need to login as the user that owns this video in order to query it
-
-            $user = User::find($pendingVideoChange->user_id);
+            $user = $pendingVideo->getUser();
             if (!$user) {
-                $this->log->error("User {$pendingVideoChange->user_id} not found.");
+                $this->log->error("User {$pendingVideo->user_id} not found in database.");
                 continue;
             }
 
-            $googleClient = App::make('Google_Client');
-            $googleClient->setAccessToken($user->access_token);
+            $this->log->info("Checking if video {$pendingVideo->video_id} (user {$user->name}) is published yet.");
 
-            $video = $pendingVideoChange->getVideo();
+
+            // We need to login as the user that owns this video in order to query it
+            try {
+                $googleClient = App::make('Google_Client');
+                $googleClient->setAccessToken($user->access_token);
+            } catch (Exception $e) {
+                $this->log->error("Exception setting Google access token: " . $e->getMessage());
+                continue;
+            }
+
+            $video = $pendingVideo->getVideo();
 
             if ($video->isPublished()) {
-                $this->log->info("Video {$pendingVideoChange->video_id} published at "
-                    . date('r', $video->getPublishedTimestamp()));
+                $this->log->info("Video {$pendingVideo->video_id} was published at "
+                    . date('Y-m-d H:i:s', $video->getPublishedTimestamp()));
 
-                $thisVideoChanges = DescriptionChange::where('video_id', $pendingVideoChange->video_id)
+                $thisVideoChanges = DescriptionChange::where('video_id', $pendingVideo->video_id)
                     ->whereNotNull('execute_mins_after_publish')
                     ->whereNull('executed_at')
                     ->get();
@@ -109,16 +123,15 @@ class ExecuteChanges extends Command
                 foreach ($thisVideoChanges as $thisVideoChange) {
                     $publishedAt = $video->getPublishedTimestamp();
                     $executeAt = $publishedAt + $thisVideoChange->execute_mins_after_publish * 60;
-
-                    $this->log->info("Setting execute time for change {$thisVideoChange->id} to "
-                        . date('r', $executeAt));
-
                     $thisVideoChange->execute_at = date('Y-m-d H:i:s', $executeAt);
                     $thisVideoChange->execute_mins_after_publish = null;
                     $thisVideoChange->save();
+
+                    $this->log->info("Set execute time for change {$thisVideoChange->id} to "
+                        . $thisVideoChange->execute_at);
                 }
             } else {
-                $this->log->notice("Video {$pendingVideoChange->video_id} not published.");
+                $this->log->notice("Video {$pendingVideo->video_id} is not published.");
             }
 
         }

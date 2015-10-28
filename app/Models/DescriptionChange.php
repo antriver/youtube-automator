@@ -23,6 +23,11 @@ class DescriptionChange extends Model
         return new Video($this->video_id);
     }
 
+    public function getUser()
+    {
+        return User::find($this->user_id);
+    }
+
     /**
      * Change the video's description via the YouTube API.
      *
