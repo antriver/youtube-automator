@@ -50,12 +50,16 @@ class ExecuteChanges extends Command
 
             $user = $change->getUser();
 
-            $this->log->info("Executing change {$change->id} for video {$change->video_id} (user {$user->name})");
+            $this->log->info("Change {$change->id}: Executing change for video {$change->video_id} (user {$user->name})");
             try {
                 $success = $change->execute();
-                $this->log->info("Change {$change->id} result: {$success}");
+
+                $snippet = substr($change->description, 0, 20) . '...';
+
+                $this->log->info("Change {$change->id}: Successfully changed description of video {$change->video_id} to \"{$snippet}\"");
+
             } catch (Exception $e) {
-                $this->log->error("Exception changing video description: " . $e->getMessage());
+                $this->log->error("Change {$change->id}: Exception changing video description: " . $e->getMessage());
             }
         }
     }
