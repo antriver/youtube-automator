@@ -92,10 +92,14 @@ class ExecuteChanges extends Command
                     "Access Token for {$user->name} expires at {$user->access_token_expires}"
                 );
 
+                // Pre-emptively renew the token if it expires in 15 mins
                 $expires = strtotime($user->access_token_expires);
                 $cutoff = strtotime("+15 MINUTES");
 
-                if ($expires < $cutoff) {
+                // Or if Google tells us it's already expires
+                $googleClient->setAccessToken($user->access_token);
+
+                if ($expires < $cutoff || $googleClient->isAccessTokenExpired()) {
                     $this->log->info(
                         "Refreshing token for '{$user->name}'."
                     );
