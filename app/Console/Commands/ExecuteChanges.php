@@ -104,7 +104,11 @@ class ExecuteChanges extends Command
                         "Refreshing token for '{$user->name}'."
                     );
 
-                    $user->refreshAccessToken();
+                    try {
+                        $user->refreshAccessToken();
+                    } catch (Exception $e) {
+                        $this->log->error("Refreshing token for user '{$user->name}' failed.", $e->getMessage());
+                    }
 
                     $this->log->info(
                         "Token for '{$user->name}' now expires at {$user->access_token_expires}"
