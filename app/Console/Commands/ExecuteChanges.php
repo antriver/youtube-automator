@@ -107,7 +107,7 @@ class ExecuteChanges extends Command
                     try {
                         $user->refreshAccessToken();
                     } catch (Exception $e) {
-                        $this->log->error("Refreshing token for user '{$user->name}' failed.", $e->getMessage());
+                        $this->log->error("Refreshing token for user '{$user->name}' failed.", [$e->getMessage()]);
                     }
 
                     $this->log->info(
